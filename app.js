@@ -11,6 +11,10 @@ var gameStart = {},
   playerScore = 0,
   snakeFood = {},
   snakeDirection = '',
+  directionLeft = {},
+  directionright = {},
+  directionup = {},
+  directiondown = {},
   speedSize = 0,
   timer = {};
 
@@ -18,6 +22,10 @@ function initElement() {
   gameStart = document.querySelector('#gameStart');
   gameSpeed = document.querySelector('#gameSpeed');
   gameArea = document.querySelector('#gameArea');
+  directionLeft = document.querySelector('#left');
+  directionright = document.querySelector('#right');
+  directionup = document.querySelector('#up');
+  directiondown = document.querySelector('#down');
 
   gameAreaContext = gameArea.getContext('2d');
   gameAreaWidth = 600;
@@ -129,14 +137,23 @@ function onStartGame() {
 
 function changeDirection(e) {
   var keys = e.which;
-  if (keys == '40' && snakeDirection != 'up') snakeDirection = 'down';
-  else if (keys == '39' && snakeDirection != 'left') snakeDirection = 'right';
-  else if (keys == '38' && snakeDirection != 'down') snakeDirection = 'up';
-  else if (keys == '37' && snakeDirection != 'right') snakeDirection = 'left';
+  if ((keys == '40' || e.currentTarget.defaultValue == 'down') && snakeDirection != 'up') snakeDirection = 'down';
+  else if ((keys == '39' || e.currentTarget.defaultValue == 'right') && snakeDirection != 'left') snakeDirection = 'right';
+  else if ((keys == '38' || e.currentTarget.defaultValue == 'up') && snakeDirection != 'down') snakeDirection = 'up';
+  else if ((keys == '37' || e.currentTarget.defaultValue == 'left' ) && snakeDirection != 'right') snakeDirection = 'left';
+
+}
+
+function changeDirectionButton(e) {
+  if (e == 'left') snakeDirection = 'left';
 }
 
 function initEvent() {
   gameStart.addEventListener('click', onStartGame);
+  directionLeft.addEventListener('click', changeDirection);
+  directionright.addEventListener('click', changeDirection);
+  directionup.addEventListener('click', changeDirection);
+  directiondown.addEventListener('click', changeDirection);
   window.addEventListener('keydown', changeDirection);
 }
 
